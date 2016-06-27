@@ -1,0 +1,4 @@
+services:
+    api.services.google_places:
+        class: ApiBundle\Services\GooglePlaces
+        arguments: ["%google_places_api_key%", "@csa_guzzle.client.google_places_api"]

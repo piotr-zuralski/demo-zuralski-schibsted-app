@@ -1,0 +1,36 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Date: Mon, 27 Jun 2016 08:45:03 GMT
+Expires: Mon, 27 Jun 2016 08:50:03 GMT
+Cache-Control: public, max-age=300
+Server: pablo
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Alternate-Protocol: 443:quic
+Alt-Svc: quic=":443"; ma=2592000; v="34,33,32,31,30,29,28,27,26,25"
+Accept-Ranges: none
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+{
+   "html_attributions" : [],
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 54.359928,
+               "lng" : 18.5806311
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+         "id" : "c937b7f0c2c700735095b1fb220727a1f760bea0",
+         "name" : "Pierogarnia Cayenne",
+         "place_id" : "ChIJV_Xd1F50_UYREG3tnb3Kks4",
+         "reference" : "CnRnAAAAFI_c9g0jzLtfWK4pPQ-mS5nShKeB5HoaIdAAM3lRJ69a-r2wIhpZvsH0mDs3Q9ELmWnrUP2iKbA7S0bQrEUAcVc5R2V7CGRcYPS73NgmspVCpu7KPBCf2L2nV01bYDjg-T7XW_jD_k02JXsRkrl-IxIQXtyOICRUa5ZJR46Sw8Ij1hoU3wasNbwZtRdQzPJ7n6KC9GdDFgg",
+         "scope" : "GOOGLE",
+         "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "Leona Kruczkowskiego 27B, Gdańsk"
+      }
+   ],
+   "status" : "OK"
+}

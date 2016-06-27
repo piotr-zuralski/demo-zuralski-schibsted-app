@@ -1,0 +1,14 @@
+frontend:
+    resource: "@FrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   /api/rest/v1
+
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/rest/doc
+

@@ -1,0 +1,105 @@
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Date: Mon, 27 Jun 2016 08:59:13 GMT
+Expires: Mon, 27 Jun 2016 09:04:13 GMT
+Server: pablo
+X-XSS-Protection: 1; mode=block
+X-Frame-Options: SAMEORIGIN
+Cache-Control: public, max-age=300
+Age: 18
+Alternate-Protocol: 443:quic
+Alt-Svc: quic=":443"; ma=2592000; v="34,33,32,31,30,29,28,27,26,25"
+Accept-Ranges: none
+Vary: Accept-Encoding
+Transfer-Encoding: chunked
+
+{
+   "html_attributions" : [],
+   "result" : {
+      "address_components" : [
+         {
+            "long_name" : "27B",
+            "short_name" : "27B",
+            "types" : [ "street_number" ]
+         },
+         {
+            "long_name" : "Leona Kruczkowskiego",
+            "short_name" : "Leona Kruczkowskiego",
+            "types" : [ "route" ]
+         },
+         {
+            "long_name" : "Piecki-Migowo",
+            "short_name" : "Piecki-Migowo",
+            "types" : [ "neighborhood", "political" ]
+         },
+         {
+            "long_name" : "Gdańsk",
+            "short_name" : "Gdańsk",
+            "types" : [ "locality", "political" ]
+         },
+         {
+            "long_name" : "Gdańsk",
+            "short_name" : "Gdańsk",
+            "types" : [ "administrative_area_level_3", "political" ]
+         },
+         {
+            "long_name" : "Gdańsk",
+            "short_name" : "Gdańsk",
+            "types" : [ "administrative_area_level_2", "political" ]
+         },
+         {
+            "long_name" : "pomorskie",
+            "short_name" : "pomorskie",
+            "types" : [ "administrative_area_level_1", "political" ]
+         },
+         {
+            "long_name" : "Poland",
+            "short_name" : "PL",
+            "types" : [ "country", "political" ]
+         },
+         {
+            "long_name" : "80-288",
+            "short_name" : "80-288",
+            "types" : [ "postal_code" ]
+         }
+      ],
+      "adr_address" : "\u003cspan class=\"street-address\"\u003eLeona Kruczkowskiego 27B\u003c/span\u003e, \u003cspan class=\"postal-code\"\u003e80-288\u003c/span\u003e \u003cspan class=\"locality\"\u003eGdańsk\u003c/span\u003e, \u003cspan class=\"country-name\"\u003ePoland\u003c/span\u003e",
+      "formatted_address" : "Leona Kruczkowskiego 27B, 80-288 Gdańsk, Poland",
+      "formatted_phone_number" : "505 329 838",
+      "geometry" : {
+         "location" : {
+            "lat" : 54.359928,
+            "lng" : 18.5806311
+         }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+      "id" : "c937b7f0c2c700735095b1fb220727a1f760bea0",
+      "international_phone_number" : "+48 505 329 838",
+      "name" : "Pierogarnia Cayenne",
+      "place_id" : "ChIJV_Xd1F50_UYREG3tnb3Kks4",
+      "reference" : "CnRnAAAAB32oa1bz-FrnycMBtegr4EKC9J2uKbIuqofVOVWa61r65pS5R3MaVm9AbMMxQxRoXKPsnKv4wmVhT16jZZYrrBASYnw8CEaxlrW5jPiNYxwqJd40fVi4aMinR5Dk3fjavQc7-MfVvPqvGH2Ts1wKthIQ-Et21WyLjFRUJnH96-5zShoU5NKT4ujJ7GWYCR8tnfZuhxPEKfA",
+      "reviews" : [
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Monika Niebracka",
+            "author_url" : "https://plus.google.com/108068395017996572600",
+            "language" : "pl",
+            "rating" : 5,
+            "text" : "Pierogi wyśmienite, spróbowałam ruskich, ze szpinakiem, z mięsem, z grzybami i serem oraz z soczewicą czerwoną i zieloną. Wszystkie są wyśmienite, nigdy nie jadłam lepszych pierogów. Na pewno będę stałym bywalcem. Moje ulubione to oczywiście ruskie i z mięsem, ale następnym razem chętnie skosztuję coś na słodko...może tak polecane kokosowe z czekoladą ?\nPoza tym obsługa bardzo miła, uśmiechnięta..widać, że  \" wkładają \" w pierogi całe swoje serce :)\nTrochę się czeka, ale warto. Ten smak wynagradza wszystko :)\n",
+            "time" : 1396038510
+         }
+      ],
+      "scope" : "GOOGLE",
+      "types" : [ "bar", "restaurant", "food", "point_of_interest", "establishment" ],
+      "url" : "https://maps.google.com/?cid=14885182634160123152",
+      "utc_offset" : 120,
+      "vicinity" : "Leona Kruczkowskiego 27B, Gdańsk",
+      "website" : "http://pierogarniacayenne.jimdo.com/"
+   },
+   "status" : "OK"
+}

@@ -1,0 +1,13 @@
+<div id="place-{{ place.id }}" vocab="http://schema.org/" typeof="BarOrPub">
+    <span property="name">{{ place.name }}</span>
+    <div property="geo" typeof="GeoCoordinates">
+        <span property="latitude">{{ place.location.lat }}</span>
+        <span property="longitude">{{ place.location.lng }}</span>
+
+        {% if place.address is not empty %}
+            <div property="address" typeof="PostalAddress">
+                <span property="streetAddress">{{ place.address }}</span>
+            </div>
+        {% endif %}
+    </div>
+</div>

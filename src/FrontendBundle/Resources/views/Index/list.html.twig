@@ -1,0 +1,58 @@
+{% extends '::base.html.twig' %}
+
+{% block pageTitle %}Places lists{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-8">
+            {{ form(searchForm) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-8">
+            {% for place in result %}
+                {% include '::place.html.twig' with {'place': place} %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var form     = $('form[name={{ searchForm.vars.name }}]'),
+        latInput = form.find('#{{ searchForm.lat.vars.id }}'),
+        lngInput = form.find('#{{ searchForm.lng.vars.id }}'),
+        latDiv   = latInput.parent(),
+        locationOptions = {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        };
+
+    function locationError(error) {
+        latDiv.html(latDiv.html() + '<span class="help-block has-error">' + error.message + '</span>');
+    }
+
+    function setLocation(position) {
+        latInput.val(position.coords.latitude);
+        lngInput.val(position.coords.longitude);
+        form.submit();
+    }
+
+    function getLocation() {
+        if ('geolocation' in navigator && typeof navigator.geolocation !== 'undefined') {
+            navigator.geolocation.getCurrentPosition(setLocation, locationError, locationOptions);
+        }
+    }
+
+    {% if app.request.method == 'GET' %}
+        getLocation();
+    {% endif %}
+
+    latDiv.html(latDiv.html() + '<button class"btn btn-link" onclick="getLocation(); return false;" title="Read device position">' +
+            '<span class="glyphicon glyphicon-screenshot"></span></button>'
+    );
+
+</script>
+
+{% endblock %}

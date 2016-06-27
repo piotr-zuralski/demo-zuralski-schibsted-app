@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Phing build file -->
+<project name="demo-zuralski-schibsted-app" default="build:prod">
+
+    <property name="project.src_dir"   value="${project.basedir}" override="true" />
+    <property name="project.bin_dir"   value="${project.basedir}/bin" override="true" />
+    <property name="project.build_dir" value="${project.basedir}/build" override="true" />
+
+    <mkdir dir="${project.build_dir}" />
+    <touch file="${project.build_dir}/build.properties" />
+
+    <property file="${project.build_dir}/build.properties" />
+
+
+    <target name="initialize">
+        <echo message="Checking PHP syntax"/>
+        <phplint cachefile="${project.build_dir}/cache.properties" deprecatedAsError="true" haltonfailure="true">
+            <fileset dir="${project.src_dir}/app">
+                <include name="**/*.php"/>
+            </fileset>
+            <fileset dir="${project.src_dir}/src">
+                <include name="**/*.php"/>
+            </fileset>
+            <fileset dir="${project.src_dir}/web">
+                <include name="**/*.php"/>
+            </fileset>
+        </phplint>
+
+        <echo message="Checking YAML syntax"/>
+        <apply executable="php" failonerror="true" checkreturn="true" passthru="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="lint:yaml"/>
+
+            <fileset dir="${project.basedir}/app">
+                <include name="**/*.yml"/>
+            </fileset>
+
+            <fileset dir="${project.basedir}/src">
+                <include name="**/*.yml"/>
+            </fileset>
+        </apply>
+
+        <echo message="Checking Twig syntax"/>
+        <apply executable="php" failonerror="true" checkreturn="true" passthru="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="lint:twig"/>
+
+            <fileset dir="${project.basedir}/app">
+                <include name="**/*.twig"/>
+            </fileset>
+
+            <fileset dir="${project.basedir}/src">
+                <include name="**/*.twig"/>
+            </fileset>
+        </apply>
+    </target>
+
+    <target name="_chmod:var">
+        <exec executable="chmod" logoutput="true" checkreturn="true">
+            <arg line="-R 777 ${project.basedir}/bin"/>
+        </exec>
+        <exec executable="chmod" logoutput="true" checkreturn="true">
+            <arg line="-R 777 ${project.basedir}/var"/>
+        </exec>
+    </target>
+
+    <target name="symfony:cc:prod" description="Clears application cache for &quot;prod&quot; (production) enviroment" depends="_chmod:var">
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="cache:clear"/>
+            <arg value="--env=prod"/>
+            <arg value="--no-debug"/>
+            <arg value="--no-warmup"/>
+            <arg value="-vvv"/>
+        </exec>
+
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="cache:clear"/>
+            <arg value="--env=prod"/>
+            <arg value="--no-debug"/>
+            <arg value="-vvv"/>
+        </exec>
+
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="assets:install"/>
+            <arg value="--env=prod"/>
+            <arg value="--no-debug"/>
+            <arg value="--symlink"/>
+            <arg value="-vvv"/>
+        </exec>
+
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="assetic:dump"/>
+            <arg value="--env=prod"/>
+            <arg value="--no-debug"/>
+            <arg value="-vvv"/>
+        </exec>
+        <phingcall target="_chmod:var"/>
+    </target>
+
+    <target name="symfony:cc:dev" description="Clears application cache for &quot;dev&quot; (local and development) enviroment" depends="_chmod:var">
+
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="cache:clear"/>
+            <arg value="--env=dev"/>
+            <arg value="-vvv"/>
+        </exec>
+
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="assets:install"/>
+            <arg value="--env=dev"/>
+            <arg value="--symlink"/>
+            <arg value="-vvv"/>
+        </exec>
+
+        <exec executable="php" logoutput="true" checkreturn="true">
+            <arg path="${project.bin_dir}/console"/>
+            <arg value="assetic:dump"/>
+            <arg value="--env=dev"/>
+            <arg value="-vvv"/>
+        </exec>
+        <phingcall target="_chmod:var"/>
+    </target>
+
+    <target name="build:prod"  description="Builds application for &quot;prod&quot; (production) enviroment">
+        <phingcall target="initialize"/>
+        <phingcall target="symfony:cc:prod"/>
+    </target>
+
+    <target name="build:dev" description="Builds application for &quot;dev&quot; (local and development) enviroment">
+        <phingcall target="initialize"/>
+        <phingcall target="symfony:cc:dev"/>
+    </target>
+
+</project>

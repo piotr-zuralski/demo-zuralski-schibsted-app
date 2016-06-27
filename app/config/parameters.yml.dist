@@ -1,0 +1,9 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # Google Places API key - https://console.developers.google.com/flows/enableapi?redirect=https://developers.google.com/maps/web-services/?dialogOnLoad=getkey-enabled&apiid=geocoding_backend,geolocation,directions_backend,distance_matrix_backend,elevation_backend,timezone_backend,roads,places_backend&keyType=SERVER_SIDE&reusekey=true
+    google_places_api_key:

@@ -1,0 +1,148 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: "@ApiBundle/Resources/config/services.yml" }
+    - { resource: "@FrontendBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+    google_places_api_endpoint: "https://maps.googleapis.com/maps/api/place/"
+    app_prefix: "%kernel.environment%-stp"
+    session_memcached_host:     127.0.0.1
+    session_memcached_port:     11211
+    session_memcached_expire:   43200
+    session_memcached_prefix:   "%app_prefix%"
+    cache_redis_host:           127.0.0.1
+    cache_redis_port:           6379
+    cache_redis_database:       "%app_prefix%"
+
+framework:
+    translator:      { fallbacks: ["%locale%"] }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    session:         ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    fragments:       ~
+    http_method_override: true
+    assets: ~
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+fos_rest:
+    body_listener: true
+    format_listener: false
+    param_fetcher_listener: true
+    allowed_methods_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml: true
+            rss: false
+        templating_formats:
+            html: true
+        jsonp_handler:
+            callback_param:       'callback'
+    format_listener:
+        default_priorities: ['json', 'xml', 'html', '*/*']
+        fallback_format: 'json'
+        prefer_extension: true
+        rules:
+            - { path: '^/', priorities: ['html'], fallback_format: 'html', prefer_extension: true }
+            - { path: '^/api/', priorities: ['json', 'xml'], fallback_format: 'json', prefer_extension: true }
+    service:
+        exception_handler:    fos_rest.view.exception_wrapper_handler
+    exception:
+        exception_controller: 'ApiBundle\Controller\ExceptionController::showAction'
+    body_listener:
+        array_normalizer: fos_rest.normalizer.camel_keys
+    routing_loader:
+        default_format: json
+        include_format: true
+
+nelmio_api_doc: ~
+
+bazinga_hateoas: ~
+
+csa_guzzle:
+    profiler:
+        enabled:  "%kernel.debug%"
+    logger:
+        enabled:              true
+        service:              ~
+        format:               clf
+        level:                debug
+    cache:
+        enabled:              false
+        adapter:              ~
+    clients:
+        default:
+            class:            GuzzleHttp\Client
+            config:
+                allow_redirects: true
+                http_errors: false
+                synchronous: true
+                verify: true
+                version: "1.1"
+                headers:
+                    "Content-Type": "application/json"
+                    "Content-Charset": "UTF-8"
+        google_places_api:
+            class:            GuzzleHttp\Client
+            config:
+                base_uri: "%google_places_api_endpoint%"
+                allow_redirects: true
+                http_errors: false
+                synchronous: true
+                verify: true
+                version: "1.1"
+                headers:
+                    "Content-Type": "application/json"
+                    "Content-Charset": "UTF-8"
+                    "User-Agent": "Mozilla/5.0 (compatible; zuralski-net-STP-demo/0.1; +http://zuralski.net/)"
+
+services:
+    session.storage:
+        class:  Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage
+        arguments:
+            options:
+                name:   sessionId
+                cookie_httponly:          true
+                hash_bits_per_character:  6
+                hash_function:            "sha512"
+
+mopa_bootstrap:
+    form:
+        show_legend:                    false
+        render_required_asterisk:       true
+        render_optional_text:           false
+        checkbox_label:                 widget
+        horizontal_label_class:         'col-md-3 control-label'
+        horizontal_label_offset_class:  'col-md-offset-3'
+        horizontal_input_wrapper_class: 'col-md-8'
+
+doctrine_cache:
+    aliases:
+        doctrine_default_cache: redis_cache
+    providers:
+        redis_cache:
+            redis:
+                host:           "%%cache_redis_host%"
+                port:           "%cache_redis_port%"
+                database:       "%cache_redis_database%"
