@@ -55,7 +55,13 @@
         </apply>
     </target>
 
-    <target name="_chmod:var">
+    <target name="_var:clean">
+        <exec executable="rm">
+            <arg line="-Rf 777 ${project.basedir}/var/dev/logs/* ${project.basedir}/var/dev/cache/* ${project.basedir}/var/prod/logs/* ${project.basedir}/var/prod/cache/*"/>
+        </exec>
+    </target>
+
+    <target name="_var:chmod">
         <exec executable="chmod" logoutput="true" checkreturn="true">
             <arg line="-R 777 ${project.basedir}/bin"/>
         </exec>
@@ -64,7 +70,7 @@
         </exec>
     </target>
 
-    <target name="symfony:cc:prod" description="Clears application cache for &quot;prod&quot; (production) enviroment" depends="_chmod:var">
+    <target name="symfony:cc:prod" description="Clears application cache for &quot;prod&quot; (production) enviroment" depends="_var:chmod,_var:clean">
         <exec executable="php" logoutput="true" checkreturn="true">
             <arg path="${project.bin_dir}/console"/>
             <arg value="cache:clear"/>
@@ -98,11 +104,11 @@
             <arg value="--no-debug"/>
             <arg value="-vvv"/>
         </exec>
-        <phingcall target="_chmod:var"/>
+        <phingcall target="_var:chmod"/>
     </target>
 
-    <target name="symfony:cc:dev" description="Clears application cache for &quot;dev&quot; (local and development) enviroment" depends="_chmod:var">
-
+    <target name="symfony:cc:dev" description="Clears application cache for &quot;dev&quot; (local and development) enviroment" depends="_var:chmod,_var:clean">
+	
         <exec executable="php" logoutput="true" checkreturn="true">
             <arg path="${project.bin_dir}/console"/>
             <arg value="cache:clear"/>
@@ -124,7 +130,7 @@
             <arg value="--env=dev"/>
             <arg value="-vvv"/>
         </exec>
-        <phingcall target="_chmod:var"/>
+        <phingcall target="_var:chmod"/>
     </target>
 
     <target name="build:prod"  description="Builds application for &quot;prod&quot; (production) enviroment">
